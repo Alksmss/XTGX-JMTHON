@@ -1,0 +1,111 @@
+
+#! / بن / باش
+
+_get_ziplink () {
+    regex المحلي
+    regex = ' (https؟): //github.com/.+/.+ '
+    إذا [[ $ UPSTREAM_REPO  ==  " Jmthon-iq " ]]
+    من ثم
+        صدى  " aHR0cHM6Ly9naXRodWIuY29tL0pNVEhPTi1BUi9KTVRIT04tUEFDSy9hcmNoaXZlL21hc3Rlci56aXA "  | Base64 - د
+    إليف [[ $ UPSTREAM_REPO  = ~  $ regex ]]
+    من ثم
+        إذا [[ $ UPSTREAM_REPO_BRANCH ]]
+        من ثم
+            صدى  " $ {UPSTREAM_REPO} / أرشيف / $ {UPSTREAM_REPO_BRANCH} .zip "
+        آخر
+            صدى  " $ {UPSTREAM_REPO} /archive/master.zip "
+        فاي
+    آخر
+        صدى  " aHR0cHM6Ly9naXRodWIuY29tL0pNVEhPTi1BUi9KTVRIT04tUEFDSy9hcmNoaXZlL21hc3Rlci56aXA "  | Base64 - د
+    فاي
+}
+
+_get_repolink () {
+    regex المحلي
+    rlink المحلية
+    regex = ' (https؟): //github.com/.+/.+ '
+    إذا [[ $ UPSTREAM_REPO  ==  " Jmthon-iq " ]]
+    من ثم
+        rlink = " صدى " aHR0cHM6Ly9naXRodWIuY29tL0pNVEhPTi1BUi9KTS1USE9O = "  | base64 -d `
+    إليف [[ $ UPSTREAM_REPO  = ~  $ regex ]]
+    من ثم
+        rlink = ` صدى " $ {UPSTREAM_REPO} " `
+    آخر
+        rlink = " صدى " aHR0cHM6Ly9naXRodWIuY29tL0pNVEhPTi1BUi9KTS1USE9O = "  | base64 -d `
+    فاي
+    صدى  " $ rlink "
+}
+
+
+_run_python_code () {
+    python3 $ {pVer ٪ . * } -c " $ 1 "
+}
+
+_run_catpack_git () {
+    $ ( _run_python_code ' من git import Repo
+استيراد النظم
+OFFICIAL_UPSTREAM_REPO = "https://github.com/JMTHON-AR/CATPACK"
+ACTIVE_BRANCH_NAME = "رئيسي"
+الريبو = Repo.init ()
+origin = repo.create_remote ("temponame"، OFFICIAL_UPSTREAM_REPO)
+Origin.fetch ()
+repo.create_head (ACTIVE_BRANCH_NAME، origin.refs [ACTIVE_BRANCH_NAME])
+repo.heads [ACTIVE_BRANCH_NAME] .checkout (صحيح) ' )
+}
+
+_run_cat_git () {
+    repolink المحلي = $ ( _get_repolink )
+    $ ( _run_python_code ' من git import Repo
+استيراد النظم
+OFFICIAL_UPSTREAM_REPO = " ' $ repolink ' "
+ACTIVE_BRANCH_NAME = " " $ UPSTREAM_REPO_BRANCH " " أو "سيد"
+الريبو = Repo.init ()
+origin = repo.create_remote ("temponame"، OFFICIAL_UPSTREAM_REPO)
+Origin.fetch ()
+repo.create_head (ACTIVE_BRANCH_NAME، origin.refs [ACTIVE_BRANCH_NAME])
+repo.heads [ACTIVE_BRANCH_NAME] .checkout (صحيح) ' )
+}
+
+_set_bot () {
+    zippath المحلي
+    zippath = " catuserbot.zip "
+    صدى  "   تنزيل شفرة المصدر ... "
+    wget -q $ ( _get_ziplink ) -O " $ zippath "
+    صدى  "   تفريغ البيانات ... "
+    CATPATH ​​= $ ( zipinfo -1 " $ zippath "  | grep -v " /. " ) ؛
+    unzip -qq " $ zippath "
+    صدى  " تم "
+    echo  "   جار تحميل بيانات السورس انتظر قليلا ... "
+    rm -rf " $ zippath "
+    النوم 5
+    _run_catpack_git
+    قرص مضغوط  $ CATPATH
+    _run_cat_git
+    python3 ../setup/updater.py ../requirements.txt requirements.txt
+    chmod -R 755 bin
+    صدى  "     بدء CatUserBot     "
+    صدى  "
+                        : '###### :::::' ### :::: '######## ::::
+                        '## ... ## :::' ## ## ::: ... ## .. :::::
+                         ## ::: .. ::: '## :. ## ::::: ## :::::::
+                         ## ::::::: '## :::. ## :::: ## :::::::
+                         ## :::::::: ######### :::: ## :::::::
+                         ## ::: ##: ## .... ## :::: ## :::::::
+                        . ###### :: ## :::: ## :::: ## ::::::::
+                        : ...... ::: .. ::::: .. ::::: .. ::::::::
+    "
+
+    صدى  "
+    '## ::::' ## :: '###### ::' ########: '######## ::' ####### # ::: '####### ::' ########:
+     ## :::: ##: '## ... ##: ## ..... :: ## .... ##: ## .... ##:' ## .. .. ##: ... ## .. ::
+     ## :::: ##: ## ::: .. :: ## ::::::: ## :::: ##: ## :::: ##: ## ::: : ## :::: ## ::::
+     ## :::: ## :. ###### :: ###### ::: ######## :: ######## :: ## :::: ## :::: # # ::::
+     ## :::: ## :: ..... ##: ## ... :::: ## .. ## ::: ## .... ##: ## ::: : ## :::: ## ::::
+     ## :::: ##: '## ::: ##: ## ::::::: ## ::. ## :: ## :::: ##: ## :::: ## :::: ## ::::
+    . ####### ::. ###### :: ########: ## :::. ##: ######## ::. ####### ::::: ## ::::
+    : ....... :::: ...... ::: ........ :: .. ::::: .. :: ........ :::: ....... :::::: .. :::::
+    "
+    python3 -m userbot
+}
+
+_set_bot
