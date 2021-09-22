@@ -1,18 +1,18 @@
 {
   "name": "بـوت حربي ",
-  "description": "بـوت جمثون العربي الاول في الشرق الأوسط السورس مجاني لا يخدعك أحد في تنصيب - قناة السورس @JMTHON ",
+  "description": "بـوت جمثون العربي الاول في الشرق الأوسط السورس مجاني لا يخدعك أحد في تنصيب - قناة السورس @HRBY ",
   "logo": "https://telegra.ph/file/e39d02603863669b09c4d.jpg",
   "keywords": [
     "plugin",
     "modular",
     "productivity"
   ],
-  "repository": "https://github.com/JMTHON-AR/JMTHON-PACK",
+  "repository": "https://github.com/Alksmss/XTGX-JMTHON",
   "website": "#TODO",
   "success_url": "#TODO",
   "env": {
     "ALIVE_NAME": {
-      "description": "هـنا ضع اسم حسابك الخاص بالتلي",
+      "description": "هـنا ضع اسم حسابك الي يطلع في الفحص",
       "value": ""
     },
     "APP_ID": {
@@ -46,7 +46,7 @@
       "required": false
     },
     "HEROKU_API_KEY": {
-      "description": "ايبـي هيروكو احصل عليه من هذا الرابط مطلوبة ! https://dashboard.heroku.com/account",
+      "description": "ايبـي هيروكو احصل عليه من هذا الرابط مهممه ! https://dashboard.heroku.com/account",
       "value": ""
     },
     "HEROKU_APP_NAME": {
